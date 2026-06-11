@@ -39,6 +39,7 @@ public class JwtService {
                 .compact();
     }
 
+    // Lấy username từ Token
     public String extractUsername(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
@@ -48,11 +49,13 @@ public class JwtService {
                 .getSubject();
     }
 
+    // Kiểm tra token hơp lệ
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    // Kiểm tra hạn token
     private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }

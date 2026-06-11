@@ -25,6 +25,7 @@ public class UserService {
     public Page<UserResponse> getAllUsers(int page, int size, String keyword, String roleStr) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
+        // Chuyển role thành enum
         Role role = null;
         if (roleStr != null && !roleStr.isEmpty()) {
             try {
