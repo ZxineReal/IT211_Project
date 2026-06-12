@@ -28,5 +28,6 @@ public class TimeSlot {
     private BigDecimal price;               // Giá theo khung giờ (có thể khác basePrice)
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private CourtStatus status = CourtStatus.ACTIVE;
 }

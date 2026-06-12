@@ -31,7 +31,7 @@ public class User {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private String password; // BCrypt hash
+    private String password;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -40,7 +40,9 @@ public class User {
     private String fullName;
     private String avatarUrl;
 
+    @Builder.Default
     private boolean enabled = true;           // Khoá tài khoản
+    @Builder.Default
     private boolean accountNonLocked = true;
 
     @Column(name = "created_at")
@@ -51,5 +53,10 @@ public class User {
 
     // Quan hệ
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<Booking> bookings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "manager", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<BadmintonCluster> clusters = new ArrayList<>();
 }

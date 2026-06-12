@@ -12,5 +12,5 @@ public class UserUpdateRequest {
     private String phoneNumber;
     private Boolean enabled;
     private Boolean accountNonLocked;
-    private Role role;           // Chỉ Admin mới được thay đổi
+    private Role role;
 }

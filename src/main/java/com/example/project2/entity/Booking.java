@@ -39,9 +39,11 @@ public class Booking {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
     private BookingStatus status = BookingStatus.PENDING;
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private PaymentStatus paymentStatus = PaymentStatus.UNPAID;
 
     private BigDecimal totalPrice;

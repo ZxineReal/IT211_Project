@@ -21,6 +21,18 @@ public class JwtService {
     @Value("${jwt.expiration:86400000}")
     private long jwtExpiration;
 
+    @Value("${jwt.refresh-expiration:604800000}")
+    private long jwtRefreshExpiration;
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + jwtRefreshExpiration))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
@@ -60,7 +72,7 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
 
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()

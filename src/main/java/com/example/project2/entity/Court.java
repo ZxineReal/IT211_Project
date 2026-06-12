@@ -31,18 +31,18 @@ public class Court {
     private String imageUrl;                // Ảnh chính
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private CourtStatus status = CourtStatus.ACTIVE;
 
-    private String location;                // Vị trí cụm sân
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cluster_id", nullable = false)
+    private BadmintonCluster cluster;       // Thuộc cụm sân nào
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id")
-    private User manager;                   // Chủ sân / Quản lý
-
     // Một sân có nhiều ảnh
     @OneToMany(mappedBy = "court", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<CourtImage> images = new ArrayList<>();
 }
